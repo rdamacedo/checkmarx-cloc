@@ -18,7 +18,13 @@ def call():
         print(text)
         return False
 
-    text = "RepoFolder=[{}]".format(repoFolder)
+    repoUrl = data['repoUrl']
+    if repoUrl == "":
+        text = "Couldnt retrieve configuration! - repoUrl=[{}]".format(repoUrl)
+        print(text)
+        return False
+
+    text = "RepoFolder=[{}], RepoUrl=[{}]".format(repoFolder, repoUrl)
     print(text)
 
     cloc_bin = "cloc-188.pl"

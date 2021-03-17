@@ -16,6 +16,22 @@ def send():
         print("Error while validating SMTP configuration!")
         return False
 
+    dataRepo = getSettings('repository')
+    if dataRepo == None:
+        text = "Couldnt retrieve configuration. - data=[{}]".format(dataRepo)
+        print(text)
+        return False
+
+    repoUrl = dataRepo['repoUrl']
+    if repoUrl == "":
+        text = "Couldnt retrieve configuration! - repoUrl=[{}]".format(repoUrl)
+        print(text)
+        return False
+
+    content = """
+                Automatic message sent by checkmarx cloc tool. 
+                Please check the results attached. Repo analized = [{}]""".format(repoUrl)
+
     server = data['server']
     port = data['port']
     SSL = data['SSL']
@@ -30,8 +46,8 @@ def send():
     msg["From"] = sender
     msg["To"] = recipient
     msg['Subject'] = subject
-    msg.set_content(
-        "Automatic message sent by checkmarx cloc tool. Please check the results attached.")
+
+    msg.set_content(content)
     msg.add_attachment(open(output, "r").read(), filename=outputFileName)
 
     if SSL.upper() == "YES" or SSL.upper() == "TRUE":
