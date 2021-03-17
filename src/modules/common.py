@@ -1,11 +1,6 @@
 import os
-import inspect
 import platform
 from pathlib import Path
-import messages as msgcatalog
-
-myself = lambda: inspect.stack()[1][3]
-
 
 def is_accessible(path, mode='r'):
     try:
@@ -22,21 +17,20 @@ def getCurrentPath():
 
 
 def get_sysinfo():
-    uname = platform.uname()
-    return uname
+    return platform.uname()
 
 
-def getSystemEscapeChar():
-    plt = get_sysinfo().system
-    if plt == "Windows":
-        escapeChar = "\\"
-    elif plt == "Linux":
-        escapeChar = "/"
-    elif plt == "Darwin":
-        escapeChar = "/"
+def getEscapeChar():
+    platform = get_sysinfo().system
+    if platform == "Windows":
+        echar = "\\"
+    elif platform == "Linux":
+        echar = "/"
+    elif platform == "Darwin":
+        echar = "/"
     else:
-        escapeChar = ""
-    return escapeChar
+        echar = ""
+    return echar
 
 
 # Space Char
@@ -49,18 +43,15 @@ Dash = "-"
 Dot = "."
 
 # Get Escape Char According to O.S.
-escapeChar = getSystemEscapeChar()
+echar = getEscapeChar()
 
 # Get the current directory
 curPath = getCurrentPath()
 
-# Salesforce DateFormat
-salesforceDateFormat = ""  # it defaults to isoformat i.e. 2020-07-03 (YYYY = year, MM = month, DD = day)
-
 # CLOC Folder and output file
-clocOutputFolder = curPath + escapeChar + "output"
-clocOutputFileName = "cloc-output.txt"
-clocOutput = clocOutputFolder + escapeChar + clocOutputFileName
+outputFolder = curPath + echar + "output"
+outputFileName = "checkmarx-cloc-output.txt"
+output = outputFolder + echar + outputFileName
 
 
 def createFolder(folder):
@@ -68,7 +59,7 @@ def createFolder(folder):
         path = Path(folder)
         path.mkdir(parents=True, exist_ok=True)
     except OSError:
-        msgtext = msgcatalog.createDirectoryError + spaceChar + " - " + folder
+        text = "Could not create directory - " + folder
         print(msgtext)
         return False
 
@@ -77,8 +68,8 @@ def createFolder(folder):
 
 def createFile(file, msg, linebreak):
     if linebreak != 0 and linebreak != 1:
-        msgtext = "createFile: linebreak parameter can not be different from 0 or 1! - linebreak=[{}]".format(linebreak)
-        print(msgtext)
+        text = "linebreak parameter can not be different from 0 or 1! - linebreak=[{}]".format(linebreak)
+        print(text)
         return False
 
     mode = 'w'
@@ -89,8 +80,8 @@ def createFile(file, msg, linebreak):
             elif linebreak == 1:
                 f.write(msg + "\n")
     except IOError:
-        msgtext = msg.createFileError + spaceChar + " - " + file
-        print(msgtext)
+        text = "Could not create file - " + file
+        print(text)
         return False
 
     return True
@@ -98,8 +89,8 @@ def createFile(file, msg, linebreak):
 
 def appendFile(file, msg, linebreak):
     if linebreak != 0 and linebreak != 1:
-        msgtext = "appendFile: linebreak parameter can not be different from 0 or 1! - linebreak=[{}]".format(linebreak)
-        print(msgtext)
+        text = "linebreak parameter can not be different from 0 or 1! - linebreak=[{}]".format(linebreak)
+        print(text)
         return False
 
     mode = 'a'
@@ -110,8 +101,8 @@ def appendFile(file, msg, linebreak):
             elif linebreak == 1:
                 f.write(msg + "\n")
     except IOError:
-        msgtext = msg.appendFileError + spaceChar + " - " + file
-        print(msgtext)
+        text = "Could not append a text into the output file - " + file
+        print(text)
         return False
 
     return True
@@ -119,15 +110,14 @@ def appendFile(file, msg, linebreak):
 
 def doCreateFolderStructureAndFile(cFolder, cFile, cMsg, type):
     if type != 0 and type != 1:
-        msgtext = "doCreateFolderStructureAndFile: type parameter can not be different from 0 or 1! - type=[{}]".format(
-            type)
-        print(msgtext)
+        text = "type parameter can not be different from 0 or 1! - type=[{}]".format(type)
+        print(text)
         return False
 
     if not createFolder(cFolder):
         return False
     else:
-        f = cFolder + escapeChar + cFile
+        f = cFolder + echar + cFile
         if not createFile(f, cMsg, type):
             return False
 
@@ -135,7 +125,7 @@ def doCreateFolderStructureAndFile(cFolder, cFile, cMsg, type):
 
 
 def validateStructureAndFile(folder, filename):
-    f = folder + escapeChar + filename
+    f = folder + echar + filename
 
     if not os.path.exists(folder):
         return False

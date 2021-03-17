@@ -2,11 +2,11 @@
 import json
 import os
 
-from src.modules.libUtils import curPath, escapeChar, spaceChar, is_accessible
+from src.modules.common import curPath, echar, is_accessible
 
 
 def checkStructureAndFile(folder, filename):
-    f = folder + escapeChar + filename
+    f = folder + echar + filename
 
     if not os.path.exists(folder):
         return False
@@ -19,85 +19,73 @@ def checkStructureAndFile(folder, filename):
     return True
 
 def getConfig(search_tag):
-    configFileName = "config.json"
-    configFolderPath = curPath + escapeChar + "config"
+    configFileName = "settings.json"
+    configFolderPath = curPath
     if checkStructureAndFile(configFolderPath, configFileName):
-        f = configFolderPath + escapeChar + configFileName
+        f = configFolderPath + echar + configFileName
         try:
             with open(f, 'r') as config:
                 data = json.load(config)
-                data_dict = data[search_tag][0]
+                datadict = data[search_tag][0]
 
         except Exception:
-            msgtext = "Error reading file" + spaceChar + " - " + f
-            print(msgtext)
+            text = "Error reading file - " + f
+            print(text)
             return None
 
-    return data_dict
+    return datadict
 
-def checkEMailConfig(data_dict):
+def checkSMTPConfig(data):
 
-    smtpServer = data_dict['SMTPServer']
-    if smtpServer == "":
-        msgtext = "Could not get SMTP server configuration! - smtpServer=[{}]".format(smtpServer)
-        print(msgtext)
+    server = data['server']
+    if server == "":
+        text = "Could not get SMTP server configuration! - smtpServer=[{}]".format(server)
+        print(text)
         return False
 
-    smtpPort = data_dict['SMTPPort']
-    if smtpPort == "":
-        msgtext = "Could not get SMTP port configuration! - smtpPort=[{}]".format(smtpPort)
-        print(msgtext)
+    port = data['port']
+    if port == "":
+        text = "Could not get SMTP port configuration! - smtpPort=[{}]".format(port)
+        print(text)
         return False
 
-    useSSL = data_dict['useSSL']
-    if (useSSL == "" or (useSSL != "YES" and useSSL != "NO")):
-        msgtext = "Error while getting SSL configuration! - useSSL=[{}]".format(useSSL)
-        print(msgtext)
+    SSL = data['SSL']
+    if SSL == "" or (SSL.upper() != "YES" and SSL.upper() != "NO" and SSL.upper() != "TRUE" and SSL.upper() != "FALSE"):
+        text = "Error on SSL configuration! - SSL=[{}]".format(SSL)
+        print(text)
         return False
 
-    sender = data_dict['sender']
+    sender = data['sender']
     if sender == "":
-        msgtext = "Could not get Sender configuration! - sender=[{}]".format(sender)
-        print(msgtext)
+        text = "Error on Sender configuration! - sender=[{}]".format(sender)
+        print(text)
         return False
 
-    senderName = data_dict['senderName']
-    if senderName == "":
-        msgtext = "Could not get Sender Name configuration! - senderName=[{}]".format(senderName)
-        print(msgtext)
+    recipient = data['recipient']
+    if recipient == "":
+        text = "Error on Recipient configuration! - recipient=[{}]".format(recipient)
+        print(text)
         return False
 
-    receiver = data_dict['receiver']
-    if receiver == "":
-        msgtext = "Could not get Receiver configuration! - receiver=[{}]".format(receiver)
-        print(msgtext)
-        return False
-
-    receiverName = data_dict['receiverName']
-    if receiverName == "":
-        msgtext = "Could not get Receiver Name configuration! - receiverName=[{}]".format(receiverName)
-        print(msgtext)
-        return False
-
-    subject = data_dict['subject']
+    subject = data['subject']
     if subject == "":
-        msgtext = "Could not get Subject configuration! - subject=[{}]".format(subject)
-        print(msgtext)
+        text = "Error on Subject configuration! - subject=[{}]".format(subject)
+        print(text)
         return False
 
-    username = data_dict['username']
+    username = data['username']
     if username == "":
-        msgtext = "Could not get Username configuration! - username=[{}]".format(username)
-        print(msgtext)
+        text = "Error on Username configuration! - username=[{}]".format(username)
+        print(text)
         return False
 
-    password = data_dict['password']
+    password = data['password']
     if password == "":
-        msgtext = "Could not get Password configuration! - password=[{}]".format(password)
-        print(msgtext)
+        text = "Error on Password configuration! - password=[{}]".format(password)
+        print(text)
         return False
 
-    msgtext = "SMTPServer=[{}] - Port=[{}] - UserSSL=[{}] - Sender=[{}] - Receiver=[{}] - Subject=[{}]".format(smtpServer, smtpPort, useSSL, sender, receiver, subject)
-    print(msgtext)
+    text = "SMTP={} - Port={} - SSL={} - Sender={} - Recipient={} - Subject={}".format(server, port, SSL, sender, recipient, subject)
+    print(text)
 
     return True

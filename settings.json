@@ -1,0 +1,20 @@
+{
+  "smtp_server": [
+    {
+      "server": "smtp_server",
+      "port": "465",
+      "SSL": "True",
+      "sender": "sender",
+      "recipient": "recipient",
+      "subject": "subject",
+      "username": "username",
+      "password": "password"
+    }
+  ],
+  "repository": [
+    {
+      "repoUrl": "repo_url",
+      "repoFolder": "/tmp/"
+    }
+  ]
+}

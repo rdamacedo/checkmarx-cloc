@@ -4,22 +4,22 @@ from src.modules.config import getConfig
 
 
 def clone():
-    data_dict = getConfig('repo_config')
-    if data_dict == None:
-        msgtext = "Couldnt retrieve Config. - data_dict=[{}]".format(data_dict)
-        print(msgtext)
+    data = getConfig('repository')
+    if data == None:
+        text = "Couldnt retrieve configuration. - data=[{}]".format(data)
+        print(text)
         return False
 
-    repoFolder = data_dict['localRepoFolder']
+    repoFolder = data['repoFolder']
     if repoFolder == "":
-        msgtext = "Couldnt retrieve Repo Folder configuration! - repoFolder=[{}]".format(repoFolder)
-        print(msgtext)
+        text = "Couldnt retrieve configuration! - repoFolder=[{}]".format(repoFolder)
+        print(text)
         return False
 
-    repoUrl = data_dict['repoUrl']
+    repoUrl = data['repoUrl']
     if repoFolder == "":
-        msgtext = "Couldnt retrieve Repo URL configuration! - repoURL=[{}]".format(repoUrl)
-        print(msgtext)
+        text = "Couldnt retrieve configuration! - repoURL=[{}]".format(repoUrl)
+        print(text)
         return False
 
     repo = cloneRepoTo(repoUrl, repoFolder)

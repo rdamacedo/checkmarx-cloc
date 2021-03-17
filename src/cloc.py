@@ -1,28 +1,25 @@
 #!/usr/bin/env python3
 
+// Application Entry Point
 
 from src.modules import emailSender, clocWrapper, gitWrapper
 
-
 def main():
-    msgtext = "Application starting"
-    print(msgtext)
+    print("Application Initialization")
 
     if not gitWrapper.clone():
         print("Couldnt call clone repo, aborting")
         return False
 
     if not clocWrapper.call():
-        print("Couldnt call callCLOC, aborting")
+        print("Couldnt call CLOC, aborting")
         return False
 
     if not emailSender.send():
-        msgtext = "Could not sucessfully call sendEMail!"
-        print(msgtext)
+        print("Could not sucessfully call send EMail function!")
         return False
 
-    msgtext = "Finished application"
-    print(msgtext)
+    print("Finished application")
 
 
 if __name__ == "__main__":
