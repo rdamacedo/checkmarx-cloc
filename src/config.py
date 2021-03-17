@@ -2,7 +2,7 @@
 import json
 import os
 
-from src.modules.common import curPath, echar, is_accessible
+from common import curPath, echar, is_accessible
 
 
 def checkStructureAndFile(folder, filename):

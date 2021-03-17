@@ -1,8 +1,8 @@
 import smtplib
 from email.message import EmailMessage
 
-from src.modules.config import getConfig, checkSMTPConfig
-from src.modules.common import output, outputFileName
+from config import getConfig, checkSMTPConfig
+from common import output, outputFileName
 
 
 def send():
@@ -40,7 +40,7 @@ def send():
         srv = smtplib.SMTP(server, port)
 
         # Optional login for the receiving mail_server.
-    srv.login(sender, password)
+    srv.login(username, password)
 
     try:
         srv.send_message(msg)

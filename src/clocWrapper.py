@@ -1,8 +1,8 @@
 import os
 import subprocess
 
-from src.modules.config import getConfig
-from src.modules.common import outputFolder, createFolder, spaceChar, output
+from config import getConfig
+from common import outputFolder, createFolder, output
 
 
 def call():
@@ -21,7 +21,7 @@ def call():
     text = "RepoFolder=[{}]".format(repoFolder)
     print(text)
 
-    cloc_bin = "../libs/cloc/cloc-188.pl"
+    cloc_bin = "cloc-188.pl"
 
     if not os.path.exists(outputFolder):
         if not createFolder(outputFolder):

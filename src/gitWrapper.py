@@ -1,6 +1,6 @@
 import git
 
-from src.modules.config import getConfig
+from config import getConfig
 
 
 def clone():

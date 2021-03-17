@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-// Application Entry Point
 
-from src.modules import emailSender, clocWrapper, gitWrapper
+import clocWrapper, gitWrapper, emailSender
+
 
 def main():
     print("Application Initialization")
