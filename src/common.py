@@ -60,7 +60,7 @@ def createFolder(folder):
         path.mkdir(parents=True, exist_ok=True)
     except OSError:
         text = "Could not create directory - " + folder
-        print(msgtext)
+        print(text)
         return False
 
     return True

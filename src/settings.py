@@ -5,7 +5,7 @@ import os
 from common import curPath, echar, is_accessible
 
 
-def checkStructureAndFile(folder, filename):
+def validateSettings(folder, filename):
     f = folder + echar + filename
 
     if not os.path.exists(folder):
@@ -18,10 +18,10 @@ def checkStructureAndFile(folder, filename):
                 return False
     return True
 
-def getConfig(search_tag):
+def getSettings(search_tag):
     configFileName = "settings.json"
     configFolderPath = curPath
-    if checkStructureAndFile(configFolderPath, configFileName):
+    if validateSettings(configFolderPath, configFileName):
         f = configFolderPath + echar + configFileName
         try:
             with open(f, 'r') as config:

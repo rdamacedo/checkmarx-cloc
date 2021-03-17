@@ -1,10 +1,10 @@
 import git
 
-from config import getConfig
+from settings import getSettings
 
 
 def clone():
-    data = getConfig('repository')
+    data = getSettings('repository')
     if data == None:
         text = "Couldnt retrieve configuration. - data=[{}]".format(data)
         print(text)

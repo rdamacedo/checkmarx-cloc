@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
 
-import clocWrapper, gitWrapper, emailSender
+import clocWrapper
+import emailSender
+import gitWrapper
 
 
 def main():

@@ -1,12 +1,12 @@
 import os
 import subprocess
 
-from config import getConfig
+from settings import getSettings
 from common import outputFolder, createFolder, output
 
 
 def call():
-    data = getConfig('repository')
+    data = getSettings('repository')
     if data == None:
         text = "Couldnt retrieve configuration. - data=[{}]".format(data)
         print(text)

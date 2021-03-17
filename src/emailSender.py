@@ -1,12 +1,12 @@
 import smtplib
 from email.message import EmailMessage
 
-from config import getConfig, checkSMTPConfig
+from settings import getSettings, checkSMTPConfig
 from common import output, outputFileName
 
 
 def send():
-    data = getConfig('smtp_server')
+    data = getSettings('smtp_server')
     if data == None:
         text = "Could not sucessfully get smtp server configuration! - data=[{}]".format(data)
         print(text)
